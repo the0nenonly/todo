@@ -1,630 +1,779 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.3">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sustainable Living</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue-dark: #0d3b6e;
+    --blue-mid: #1a5fa8;
+    --blue-pale: #e8f3fb;
+    --blue-accent: #5bb8f5;
+    --green-dark: #0a3d2e;
+    --green-mid: #1a7a52;
+    --green-pale: #e6f5ef;
+    --green-accent: #4ecfa0;
+    --text: #0a1a2a;
+    --text-muted: #3a5068;
+    --white: #ffffff;
+    --surface: #f7fafd;
+    --border: #d0e4f5;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .topbar {
+    background: var(--blue-dark);
+    height: 66px;
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .profile-btn {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .profile-btn:hover { background: rgba(255,255,255,0.2); }
+  .profile-btn svg { width: 22px; height: 22px; fill: white; }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 100px;
+    padding: 8px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px; font-weight: 400;
+    color: rgba(255,255,255,0.9);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.45); }
+  .nav-btn.active {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.6);
+    font-weight: 500;
+  }
+  .nav-right { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+
+
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 100px;
+    padding: 8px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px; font-weight: 400;
+    color: rgba(255,255,255,0.9);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-dropdown-btn:hover,
+  .nav-dropdown.open .nav-dropdown-btn {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.45);
+  }
+  .nav-dropdown-btn.active {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.6);
+    font-weight: 500;
+  }
+  .dropdown-arrow {
+    font-size: 11px;
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+  .nav-dropdown.open .dropdown-arrow { transform: rotate(180deg); }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: #0a2d56;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 14px;
+    overflow: hidden;
+    min-width: 220px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+    z-index: 300;
+  }
+  .nav-dropdown.open .dropdown-menu { display: block; }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    text-decoration: none;
+  }
+  .dropdown-item:last-child { border-bottom: none; }
+  .dropdown-item:hover { background: rgba(255,255,255,0.08); }
+  .dropdown-item.active-item { background: rgba(255,255,255,0.1); }
+
+  .dropdown-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+  }
+  .dropdown-icon.outside { background: rgba(91,184,245,0.18); }
+  .dropdown-icon.inside  { background: rgba(78,207,160,0.18); }
+
+  .dropdown-label { flex: 1; }
+  .dropdown-label strong {
+    display: block;
+    font-size: 14px; font-weight: 500;
+    color: white;
+  }
+  .dropdown-label span {
+    display: block;
+    font-size: 12px; color: rgba(255,255,255,0.45);
+    margin-top: 1px;
+  }
+
+  .home-hero {
+    position: relative;
+    min-height: 520px;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  .home-hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1600&auto=format&fit=crop');
+    background-size: cover; background-position: center 40%;
+  }
+  .home-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(110deg, rgba(5,25,55,0.88) 0%, rgba(5,25,55,0.55) 55%, rgba(5,25,55,0.2) 100%);
+  }
+  .home-hero-content {
+    position: relative; z-index: 2;
+    padding: 80px 60px; max-width: 680px;
+  }
+  .home-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--blue-accent); margin-bottom: 20px;
+  }
+  .home-eyebrow::before {
+    content: ''; display: block; width: 28px; height: 2px; background: var(--blue-accent);
+  }
+  .home-hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 58px; font-weight: 400;
+    color: white; line-height: 1.1; margin-bottom: 20px;
+  }
+  .home-hero h1 em { font-style: italic; color: #7ecef5; }
+  .home-hero-desc {
+    font-size: 18px; color: rgba(255,255,255,0.72);
+    line-height: 1.7; margin-bottom: 36px; max-width: 520px;
+  }
+  .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--blue-accent); color: var(--blue-dark);
+    border: none; border-radius: 100px; padding: 14px 32px;
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #7ed8ff; transform: translateY(-1px); }
+  .btn-primary.green { background: var(--green-accent); color: var(--green-dark); }
+  .btn-primary.green:hover { background: #6fe0b5; }
+  .btn-ghost {
+    background: transparent; color: white;
+    border: 1.5px solid rgba(255,255,255,0.4); border-radius: 100px; padding: 14px 32px;
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 400;
+    cursor: pointer; transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.7); }
+
+  .home-stats {
+    background: var(--blue-mid);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .home-stat {
+    padding: 22px 16px; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .home-stat:last-child { border-right: none; }
+  .home-stat-num {
+    display: block; font-family: 'DM Serif Display', serif;
+    font-size: 28px; color: #7ecef5; line-height: 1;
+  }
+  .home-stat-label {
+    display: block; font-size: 13px;
+    color: rgba(255,255,255,0.62); margin-top: 5px; line-height: 1.4;
+  }
+
+  .section-label {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--blue-mid); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section-label.green-label { color: var(--green-mid); }
+  .section-label.green-label::after { background: #b8e8d4; }
+
+  .home-mission {
+    max-width: 960px; margin: 0 auto;
+    padding: 72px 32px 56px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: center;
+  }
+  .mission-text h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 38px; font-weight: 400; color: var(--text);
+    line-height: 1.2; margin-bottom: 18px;
+  }
+  .mission-text p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 14px; }
+  .mission-image { border-radius: 20px; overflow: hidden; height: 340px; position: relative; }
+  .mission-image img { width: 100%; height: 100%; object-fit: cover; }
+  .mission-image-badge {
+    position: absolute; bottom: 20px; left: 20px;
+    background: rgba(5,25,55,0.82); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px; padding: 12px 16px;
+    color: white; font-size: 14px; line-height: 1.4;
+  }
+  .mission-image-badge strong {
+    display: block; font-size: 20px;
+    font-family: 'DM Serif Display', serif; color: #7ecef5;
+  }
+
+  .home-topics { background: var(--blue-dark); padding: 64px 32px; }
+  .home-topics-inner { max-width: 960px; margin: 0 auto; }
+  .home-topics .section-label { color: rgba(255,255,255,0.5); }
+  .home-topics .section-label::after { background: rgba(255,255,255,0.12); }
+  .home-topics h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px; font-weight: 400; color: white; margin-bottom: 36px;
+  }
+  .topics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .topic-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; overflow: hidden;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, border-color 0.2s;
+  }
+  .topic-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+  .topic-card.outside-card:hover { border-color: rgba(91,184,245,0.5); }
+  .topic-card.inside-card:hover  { border-color: rgba(78,207,160,0.5); }
+  .topic-img { height: 200px; overflow: hidden; }
+  .topic-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+  .topic-card:hover .topic-img img { transform: scale(1.04); }
+  .topic-body { padding: 24px 26px; }
+  .topic-tag {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .topic-tag.blue { color: var(--blue-accent); }
+  .topic-tag.green { color: var(--green-accent); }
+  .topic-title { font-size: 20px; font-weight: 500; color: white; line-height: 1.3; margin-bottom: 10px; }
+  .topic-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .topic-arrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 500; margin-top: 16px;
+    transition: gap 0.2s;
+  }
+  .topic-arrow.blue { color: var(--blue-accent); }
+  .topic-arrow.green { color: var(--green-accent); }
+  .topic-card:hover .topic-arrow { gap: 10px; }
+
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }
+  .home-why { max-width: 960px; margin: 0 auto; padding: 72px 32px; }
+  .why-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px 24px;
+  }
+  .why-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--blue-pale); display: flex; align-items: center;
+    justify-content: center; margin-bottom: 16px; font-size: 22px;
+  }
+  .why-card h3 { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
+  .why-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  .home-cta-banner { margin: 0 32px 72px; border-radius: 24px; overflow: hidden; position: relative; max-width: 896px; margin-left: auto; margin-right: auto; }
+  .cta-banner-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?w=1200&auto=format&fit=crop'); background-size: cover; background-position: center; }
+  .cta-banner-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(13,59,110,0.93) 0%, rgba(26,95,168,0.80) 100%); }
+  .cta-banner-content { position: relative; z-index: 2; padding: 56px 60px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+  .cta-banner-text h2 { font-family: 'DM Serif Display', serif; font-size: 32px; font-weight: 400; color: white; line-height: 1.2; margin-bottom: 10px; }
+  .cta-banner-text p { font-size: 15px; color: rgba(255,255,255,0.68); line-height: 1.6; max-width: 400px; }
+
+  .home-footer { background: #070f1f; padding: 40px 32px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+  .footer-brand h3 { font-family: 'DM Serif Display', serif; font-size: 22px; color: white; margin-bottom: 10px; }
+  .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; }
+  .footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 14px; }
+  .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 8px; cursor: pointer; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--blue-accent); }
+  .footer-bottom { background: #070f1f; border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.25); }
+
+  .tips-hero { position: relative; height: 280px; overflow: hidden; display: flex; align-items: flex-end; padding: 0 36px 32px; }
+  .tips-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 55%; }
+  .tips-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,20,45,0.85) 0%, rgba(5,20,45,0.3) 55%, transparent 100%); }
+  .tips-hero-text { position: relative; z-index: 2; }
+  .tips-eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-accent); margin-bottom: 10px; }
+  .tips-eyebrow.green-ey { color: var(--green-accent); }
+  .tips-hero-text h1 { font-family: 'DM Serif Display', serif; font-size: 42px; font-weight: 400; color: white; line-height: 1.15; }
+  .tips-hero-text p { font-size: 17px; color: rgba(255,255,255,0.75); margin-top: 8px; max-width: 500px; line-height: 1.5; }
+
+  .stat-bar { background: var(--blue-mid); display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stat-bar.green-bar { background: var(--green-mid); }
+  .stat-item { padding: 20px 14px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { display: block; font-family: 'DM Serif Display', serif; font-size: 26px; color: #7ecef5; line-height: 1; }
+  .stat-bar.green-bar .stat-num { color: #8ef5d5; }
+  .stat-label { display: block; font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 5px; line-height: 1.4; }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 36px 24px 56px; }
+  .tips-section-label { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .tips-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .tips-section-label.green-sl { color: var(--green-mid); }
+  .tips-section-label.green-sl::after { background: #b8e8d4; }
+
+  .tips-grid { display: flex; flex-direction: column; gap: 20px; }
+  .tip-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; }
+  .tip-stripe { width: 6px; flex-shrink: 0; }
+  #page-outside .tip-card:nth-child(4n+1) .tip-stripe { background: #1a5fa8; }
+  #page-outside .tip-card:nth-child(4n+2) .tip-stripe { background: #1d9e75; }
+  #page-outside .tip-card:nth-child(4n+3) .tip-stripe { background: #ba7517; }
+  #page-outside .tip-card:nth-child(4n+0) .tip-stripe { background: #8b3ab8; }
+  #page-inside .tip-card:nth-child(4n+1) .tip-stripe { background: #1a7a52; }
+  #page-inside .tip-card:nth-child(4n+2) .tip-stripe { background: #1a5fa8; }
+  #page-inside .tip-card:nth-child(4n+3) .tip-stripe { background: #ba7517; }
+  #page-inside .tip-card:nth-child(4n+0) .tip-stripe { background: #8b3ab8; }
+
+  .tip-inner { flex: 1; padding: 22px 24px; min-width: 0; }
+  .tip-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 10px; }
+  .tip-number { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--blue-mid); background: var(--blue-pale); border-radius: 100px; padding: 4px 12px; flex-shrink: 0; margin-top: 3px; }
+  .tip-number.green-num { color: var(--green-mid); background: var(--green-pale); }
+  .tip-title { font-size: 19px; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .tip-desc { font-size: 16px; color: var(--text-muted); line-height: 1.75; margin-bottom: 14px; }
+  .facts-row { display: flex; flex-direction: column; gap: 9px; }
+  .fact-pill { display: flex; align-items: flex-start; gap: 10px; background: #eef6ff; border: 1px solid #c8e0f5; border-radius: 10px; padding: 10px 14px; font-size: 15px; color: #0c3d6e; line-height: 1.6; }
+  .fact-pill.green-pill { background: #eaf7f1; border-color: #b0dfc9; color: #0a3d2e; }
+  .fact-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-mid); flex-shrink: 0; margin-top: 6px; }
+  .fact-dot.green-dot { background: var(--green-mid); }
+  .tip-img-wrap { width: 150px; flex-shrink: 0; overflow: hidden; }
+  .tip-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  footer { background: var(--blue-dark); padding: 24px 36px; font-size: 14px; color: rgba(255,255,255,0.45); text-align: center; line-height: 1.7; }
+  footer span { color: rgba(255,255,255,0.7); }
+  footer.green-footer { background: var(--green-dark); }
+</style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1">&lt;title&gt;Sustainable Living&lt;/title&gt;</p>
-<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&amp;family=DM+Serif+Display:ital@0;1&amp;display=swap" rel="stylesheet"&gt;</p>
-<p class="p1">&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>:root {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--blue-dark: #0d3b6e;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--blue-mid: #1a5fa8;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--blue-pale: #e8f3fb;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--blue-accent: #5bb8f5;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--green-dark: #0a3d2e;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--green-mid: #1a7a52;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--green-pale: #e6f5ef;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--green-accent: #4ecfa0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--text: #0a1a2a;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--text-muted: #3a5068;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--white: #ffffff;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--surface: #f7fafd;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>--border: #d0e4f5;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: var(--surface);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: var(--text);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>min-height: 100vh;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 18px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.7;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.page { display: none; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.page.active { display: block; }</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topbar {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: var(--blue-dark);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>height: 66px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 0 28px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: sticky;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>top: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>z-index: 200;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-bottom: 1px solid rgba(255,255,255,0.08);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.profile-btn {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width: 42px; height: 42px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.12);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border: 1.5px solid rgba(255,255,255,0.3);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer; flex-shrink: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.profile-btn:hover { background: rgba(255,255,255,0.2); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.profile-btn svg { width: 22px; height: 22px; fill: white; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-btn {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: transparent;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.25);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 100px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 8px 22px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 16px; font-weight: 400;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: rgba(255,255,255,0.9);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.2s, border-color 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.45); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-btn.active {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.18);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-color: rgba(255,255,255,0.6);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-right { margin-left: auto; display: flex; gap: 10px; align-items: center; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown { position: relative; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown-btn {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: transparent;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.25);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 100px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 8px 22px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 16px; font-weight: 400;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: rgba(255,255,255,0.9);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.2s, border-color 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; gap: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown-btn:hover,</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown.open .nav-dropdown-btn {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.1);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-color: rgba(255,255,255,0.45);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown-btn.active {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.18);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-color: rgba(255,255,255,0.6);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-arrow {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transition: transform 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: inline-block;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown.open .dropdown-arrow { transform: rotate(180deg); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-menu {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: none;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>top: calc(100% + 10px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>right: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: #0a2d56;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.15);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>overflow: hidden;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>min-width: 220px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 16px 40px rgba(0,0,0,0.35);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>z-index: 300;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown.open .dropdown-menu { display: block; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-item {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 14px 20px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.15s;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-bottom: 1px solid rgba(255,255,255,0.06);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-decoration: none;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-item:last-child { border-bottom: none; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-item:hover { background: rgba(255,255,255,0.08); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-item.active-item { background: rgba(255,255,255,0.1); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-icon {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width: 34px; height: 34px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 17px; flex-shrink: 0;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-icon.outside { background: rgba(91,184,245,0.18); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-icon.inside<span class="Apple-converted-space">  </span>{ background: rgba(78,207,160,0.18); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-label { flex: 1; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-label strong {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px; font-weight: 500;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-label span {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 12px; color: rgba(255,255,255,0.45);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 1px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-hero {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: relative;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>min-height: 520px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>overflow: hidden;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-hero-bg {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: absolute; inset: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background-image: url('https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1600&amp;auto=format&amp;fit=crop');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background-size: cover; background-position: center 40%;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-hero-overlay {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: absolute; inset: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: linear-gradient(110deg, rgba(5,25,55,0.88) 0%, rgba(5,25,55,0.55) 55%, rgba(5,25,55,0.2) 100%);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-hero-content {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: relative; z-index: 2;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 80px 60px; max-width: 680px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-eyebrow {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: inline-flex; align-items: center; gap: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 12px; font-weight: 600; letter-spacing: 0.14em;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-transform: uppercase; color: var(--blue-accent); margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-eyebrow::before {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>content: ''; display: block; width: 28px; height: 2px; background: var(--blue-accent);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-hero h1 {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Serif Display', serif;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 58px; font-weight: 400;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: white; line-height: 1.1; margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-hero h1 em { font-style: italic; color: #7ecef5; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-hero-desc {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 18px; color: rgba(255,255,255,0.72);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.7; margin-bottom: 36px; max-width: 520px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: var(--blue-accent); color: var(--blue-dark);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border: none; border-radius: 100px; padding: 14px 32px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer; transition: background 0.2s, transform 0.15s;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary:hover { background: #7ed8ff; transform: translateY(-1px); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary.green { background: var(--green-accent); color: var(--green-dark); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary.green:hover { background: #6fe0b5; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn-ghost {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: transparent; color: white;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border: 1.5px solid rgba(255,255,255,0.4); border-radius: 100px; padding: 14px 32px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 400;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer; transition: background 0.2s, border-color 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.7); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-stats {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: var(--blue-mid);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: grid; grid-template-columns: repeat(4, 1fr);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-stat {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 22px 16px; text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-right: 1px solid rgba(255,255,255,0.1);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-stat:last-child { border-right: none; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-stat-num {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: block; font-family: 'DM Serif Display', serif;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 28px; color: #7ecef5; line-height: 1;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-stat-label {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: block; font-size: 13px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: rgba(255,255,255,0.62); margin-top: 5px; line-height: 1.4;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.section-label {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 12px; font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing: 0.12em; text-transform: uppercase;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: var(--blue-mid); margin-bottom: 24px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; gap: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.section-label.green-label { color: var(--green-mid); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.section-label.green-label::after { background: #b8e8d4; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-mission {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>max-width: 960px; margin: 0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 72px 32px 56px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: grid; grid-template-columns: 1fr 1fr;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>gap: 64px; align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.mission-text h2 {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Serif Display', serif;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 38px; font-weight: 400; color: var(--text);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.2; margin-bottom: 18px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.mission-text p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 14px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.mission-image { border-radius: 20px; overflow: hidden; height: 340px; position: relative; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.mission-image img { width: 100%; height: 100%; object-fit: cover; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.mission-image-badge {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>position: absolute; bottom: 20px; left: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(5,25,55,0.82); backdrop-filter: blur(8px);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.15);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 12px; padding: 12px 16px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: white; font-size: 14px; line-height: 1.4;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.mission-image-badge strong {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: block; font-size: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Serif Display', serif; color: #7ecef5;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-topics { background: var(--blue-dark); padding: 64px 32px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-topics-inner { max-width: 960px; margin: 0 auto; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-topics .section-label { color: rgba(255,255,255,0.5); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-topics .section-label::after { background: rgba(255,255,255,0.12); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-topics h2 {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Serif Display', serif;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 36px; font-weight: 400; color: white; margin-bottom: 36px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-card {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.06);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.1);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 20px; overflow: hidden;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.2s, transform 0.2s, border-color 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-card.outside-card:hover { border-color: rgba(91,184,245,0.5); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-card.inside-card:hover<span class="Apple-converted-space">  </span>{ border-color: rgba(78,207,160,0.5); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-img { height: 200px; overflow: hidden; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-card:hover .topic-img img { transform: scale(1.04); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-body { padding: 24px 26px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-tag {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px; font-weight: 600; letter-spacing: 0.1em;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-transform: uppercase; margin-bottom: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-tag.blue { color: var(--blue-accent); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-tag.green { color: var(--green-accent); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-title { font-size: 20px; font-weight: 500; color: white; line-height: 1.3; margin-bottom: 10px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-arrow {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: inline-flex; align-items: center; gap: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px; font-weight: 500; margin-top: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>transition: gap 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-arrow.blue { color: var(--blue-accent); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-arrow.green { color: var(--green-accent); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.topic-card:hover .topic-arrow { gap: 10px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-why { max-width: 960px; margin: 0 auto; padding: 72px 32px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.why-card {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: var(--white); border: 1px solid var(--border);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 16px; padding: 28px 24px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.why-icon {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>width: 48px; height: 48px; border-radius: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: var(--blue-pale); display: flex; align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>justify-content: center; margin-bottom: 16px; font-size: 22px;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.why-card h3 { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 10px; line-height: 1.3; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.why-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-cta-banner { margin: 0 32px 72px; border-radius: 24px; overflow: hidden; position: relative; max-width: 896px; margin-left: auto; margin-right: auto; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.cta-banner-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?w=1200&amp;auto=format&amp;fit=crop'); background-size: cover; background-position: center; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.cta-banner-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(13,59,110,0.93) 0%, rgba(26,95,168,0.80) 100%); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.cta-banner-content { position: relative; z-index: 2; padding: 56px 60px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.cta-banner-text h2 { font-family: 'DM Serif Display', serif; font-size: 32px; font-weight: 400; color: white; line-height: 1.2; margin-bottom: 10px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.cta-banner-text p { font-size: 15px; color: rgba(255,255,255,0.68); line-height: 1.6; max-width: 400px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.home-footer { background: #070f1f; padding: 40px 32px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.footer-brand h3 { font-family: 'DM Serif Display', serif; font-size: 22px; color: white; margin-bottom: 10px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.footer-brand p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 14px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 8px; cursor: pointer; transition: color 0.2s; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.footer-col a:hover { color: var(--blue-accent); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.footer-bottom { background: #070f1f; border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.25); }</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero { position: relative; height: 280px; overflow: hidden; display: flex; align-items: flex-end; padding: 0 36px 32px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 55%; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,20,45,0.85) 0%, rgba(5,20,45,0.3) 55%, transparent 100%); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero-text { position: relative; z-index: 2; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-accent); margin-bottom: 10px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-eyebrow.green-ey { color: var(--green-accent); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero-text h1 { font-family: 'DM Serif Display', serif; font-size: 42px; font-weight: 400; color: white; line-height: 1.15; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero-text p { font-size: 17px; color: rgba(255,255,255,0.75); margin-top: 8px; max-width: 500px; line-height: 1.5; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.stat-bar { background: var(--blue-mid); display: grid; grid-template-columns: repeat(4, 1fr); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.stat-bar.green-bar { background: var(--green-mid); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.stat-item { padding: 20px 14px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.stat-item:last-child { border-right: none; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.stat-num { display: block; font-family: 'DM Serif Display', serif; font-size: 26px; color: #7ecef5; line-height: 1; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.stat-bar.green-bar .stat-num { color: #8ef5d5; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.stat-label { display: block; font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 5px; line-height: 1.4; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.main { max-width: 900px; margin: 0 auto; padding: 36px 24px 56px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-section-label { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-section-label.green-sl { color: var(--green-mid); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-section-label.green-sl::after { background: #b8e8d4; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tips-grid { display: flex; flex-direction: column; gap: 20px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tip-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tip-stripe { width: 6px; flex-shrink: 0; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>#page-outside .tip-card:nth-child(4n+1) .tip-stripe { background: #1a5fa8; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>#page-outside .tip-card:nth-child(4n+2) .tip-stripe { background: #1d9e75; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>#page-outside .tip-card:nth-child(4n+3) .tip-stripe { background: #ba7517; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>#page-outside .tip-card:nth-child(4n+0) .tip-stripe { background: #8b3ab8; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>#page-inside .tip-card:nth-child(4n+1) .tip-stripe { background: #1a7a52; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>#page-inside .tip-card:nth-child(4n+2) .tip-stripe { background: #1a5fa8; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>#page-inside .tip-card:nth-child(4n+3) .tip-stripe { background: #ba7517; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>#page-inside .tip-card:nth-child(4n+0) .tip-stripe { background: #8b3ab8; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tip-inner { flex: 1; padding: 22px 24px; min-width: 0; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tip-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 10px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tip-number { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--blue-mid); background: var(--blue-pale); border-radius: 100px; padding: 4px 12px; flex-shrink: 0; margin-top: 3px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tip-number.green-num { color: var(--green-mid); background: var(--green-pale); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tip-title { font-size: 19px; font-weight: 600; color: var(--text); line-height: 1.3; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tip-desc { font-size: 16px; color: var(--text-muted); line-height: 1.75; margin-bottom: 14px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.facts-row { display: flex; flex-direction: column; gap: 9px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.fact-pill { display: flex; align-items: flex-start; gap: 10px; background: #eef6ff; border: 1px solid #c8e0f5; border-radius: 10px; padding: 10px 14px; font-size: 15px; color: #0c3d6e; line-height: 1.6; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.fact-pill.green-pill { background: #eaf7f1; border-color: #b0dfc9; color: #0a3d2e; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.fact-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-mid); flex-shrink: 0; margin-top: 6px; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.fact-dot.green-dot { background: var(--green-mid); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tip-img-wrap { width: 150px; flex-shrink: 0; overflow: hidden; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>.tip-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>footer { background: var(--blue-dark); padding: 24px 36px; font-size: 14px; color: rgba(255,255,255,0.45); text-align: center; line-height: 1.7; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>footer span { color: rgba(255,255,255,0.7); }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>footer.green-footer { background: var(--green-dark); }</p>
-<p class="p1">&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div id="page-home" class="page active"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="topbar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="profile-btn"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="nav-btn active" onclick="showPage('home')"&gt;Home&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-right"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-dropdown" id="dd-home"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="nav-dropdown-btn" onclick="toggleDropdown('dd-home')"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>Sustainable living &lt;span class="dropdown-arrow"&gt;▾&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="dropdown-menu"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="dropdown-item" onclick="showPage('outside'); closeDropdowns()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-icon outside"&gt;🌿&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-label"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;strong&gt;Sustainable Outside&lt;/strong&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;span&gt;Transport, shopping &amp; errands&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="dropdown-item" onclick="showPage('inside'); closeDropdowns()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-icon inside"&gt;🏠&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-label"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;strong&gt;Sustainable Inside&lt;/strong&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;span&gt;Energy, water &amp; home habits&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-hero"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-hero-bg"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-hero-overlay"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-hero-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="home-eyebrow"&gt;Your sustainability guide&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1&gt;Small steps.&lt;br&gt;&lt;em&gt;Big impact.&lt;/em&gt;&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="home-hero-desc"&gt;Every choice you make — inside your home and out in the world — shapes the planet. Discover practical, evidence-backed habits to reduce your environmental footprint starting today.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="hero-cta-row"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn-primary" onclick="showPage('outside')"&gt;Sustainable outside →&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn-primary green" onclick="showPage('inside')"&gt;Sustainable inside →&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-stats"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-stat"&gt;&lt;span class="home-stat-num"&gt;29%&lt;/span&gt;&lt;span class="home-stat-label"&gt;of global emissions from transport&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-stat"&gt;&lt;span class="home-stat-num"&gt;40&lt;/span&gt;&lt;span class="home-stat-label"&gt;tips across both guides&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-stat"&gt;&lt;span class="home-stat-num"&gt;1.5t&lt;/span&gt;&lt;span class="home-stat-label"&gt;CO₂ saved by one transit switch/week&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-stat"&gt;&lt;span class="home-stat-num"&gt;73%&lt;/span&gt;&lt;span class="home-stat-label"&gt;food footprint cut by plant-based diet&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-mission" id="mission"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mission-text"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="section-label"&gt;Our mission&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;Why sustainability matters everywhere&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Most guides focus on just one side of life. But sustainability is 24/7 — the choices you make in your home and outside it both add up to your total footprint.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;This guide covers both worlds with clear, sourced facts so every habit you build is grounded in real science, not vague advice.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mission-image"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&amp;auto=format&amp;fit=crop" alt="Forest path"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="mission-image-badge"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong&gt;40%&lt;/strong&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>emissions cut possible through daily habit changes</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-topics"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-topics-inner"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="section-label" style="color:rgba(255,255,255,0.5);"&gt;Choose your guide&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;Two guides. One goal.&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="topics-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="topic-card outside-card" onclick="showPage('outside')"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="topic-img"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&amp;auto=format&amp;fit=crop" alt="City traffic"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="topic-body"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="topic-tag blue"&gt;🌿 Outside&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 class="topic-title"&gt;Sustainable Outside&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="topic-desc"&gt;Transport, shopping, eating out, fast fashion, and the daily choices you make beyond your front door. 20 tips backed by real data.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="topic-arrow blue"&gt;Explore tips →&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="topic-card inside-card" onclick="showPage('inside')"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="topic-img"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&amp;auto=format&amp;fit=crop" alt="Cozy home"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="topic-body"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="topic-tag green"&gt;🏠 Inside&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 class="topic-title"&gt;Sustainable Inside&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="topic-desc"&gt;Energy, heating, water, food waste, and household habits. 20 tips to make your home greener — saving money and the planet.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="topic-arrow green"&gt;Explore tips →&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-why"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="section-label"&gt;Why act now&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="why-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="why-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="why-icon"&gt;🌡️&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Climate tipping points are near&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Scientists warn that exceeding 1.5°C of warming risks irreversible ecosystem changes. Every tonne of CO₂ avoided matters — including yours.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="why-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="why-icon"&gt;💡&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Individual action scales up&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Consumer behaviour drives 60–70% of global emissions. Your choices send market signals that shape what industries produce and prioritise.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="why-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="why-icon"&gt;🤝&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Social influence is powerful&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Research shows each person who adopts a sustainable habit influences 3–5 others. Sharing your choices is itself an act of environmental impact.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-cta-banner"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cta-banner-bg"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cta-banner-overlay"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cta-banner-content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cta-banner-text"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2&gt;Ready to make a difference?&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Browse 40 tips across both guides — each backed by real statistics from the EPA, Oxford University, and the European Environment Agency.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn-primary" onclick="showPage('outside')" style="white-space:nowrap;"&gt;Outside →&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn-primary green" onclick="showPage('inside')" style="white-space:nowrap;"&gt;Inside →&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-footer"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="footer-brand"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;Sustainable living&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Evidence-based guidance for reducing your environmental footprint both inside and outside the home.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="footer-col"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h4&gt;Pages&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a onclick="showPage('home')"&gt;Home&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a onclick="showPage('outside')"&gt;Sustainable Outside&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a onclick="showPage('inside')"&gt;Sustainable Inside&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="footer-col"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h4&gt;Sources&lt;/h4&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a&gt;US Environmental Protection Agency&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a&gt;European Environment Agency&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a&gt;Our World in Data&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;a&gt;University of Oxford&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="footer-bottom"&gt;All facts are for educational purposes. Individual impact varies by region and lifestyle.&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div id="page-outside" class="page"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="topbar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="profile-btn"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="nav-btn" onclick="showPage('home')"&gt;Home&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-right"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-dropdown" id="dd-outside"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="nav-dropdown-btn active" onclick="toggleDropdown('dd-outside')"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>Sustainable outside &lt;span class="dropdown-arrow"&gt;▾&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="dropdown-menu"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="dropdown-item active-item" onclick="showPage('outside'); closeDropdowns()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-icon outside"&gt;🌿&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-label"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;strong&gt;Sustainable Outside&lt;/strong&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;span&gt;Transport, shopping &amp; errands&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="dropdown-item" onclick="showPage('inside'); closeDropdowns()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-icon inside"&gt;🏠&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-label"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;strong&gt;Sustainable Inside&lt;/strong&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;span&gt;Energy, water &amp; home habits&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="tips-hero"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1400&amp;auto=format&amp;fit=crop" alt="City traffic"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tips-hero-overlay"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tips-hero-text"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="tips-eyebrow"&gt;Environmental guide&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1&gt;Sustainable outside&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Simple daily habits that measurably reduce your carbon footprint&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="stat-bar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="stat-item"&gt;&lt;span class="stat-num"&gt;29%&lt;/span&gt;&lt;span class="stat-label"&gt;of global emissions from transport&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="stat-item"&gt;&lt;span class="stat-num"&gt;4.6t&lt;/span&gt;&lt;span class="stat-label"&gt;CO₂ per car per year&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="stat-item"&gt;&lt;span class="stat-num"&gt;1.5t&lt;/span&gt;&lt;span class="stat-label"&gt;saved by one transit switch/week&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="stat-item"&gt;&lt;span class="stat-num"&gt;500yr&lt;/span&gt;&lt;span class="stat-label"&gt;for a plastic bag to decompose&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="main"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="tips-section-label"&gt;20 tips to stay sustainable outside&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tips-grid"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tip-card"&gt;&lt;div class="tip-stripe"&gt;&lt;/div&gt;&lt;div class="tip-inner"&gt;&lt;div class="tip-header"&gt;&lt;span class="tip-number"&gt;01&lt;/span&gt;&lt;h2 class="tip-title"&gt;Turn off your engine at red lights&lt;/h2&gt;&lt;/div&gt;&lt;p class="tip-desc"&gt;Idling over 10 seconds burns more fuel than restarting. Modern engines are built for frequent restarts with no added wear.&lt;/p&gt;&lt;div class="facts-row"&gt;&lt;div class="fact-pill"&gt;&lt;span class="fact-dot"&gt;&lt;/span&gt;10 minutes of idling burns ~0.26 litres of fuel and emits 600g of CO₂ for zero km travelled.&lt;/div&gt;&lt;div class="fact-pill"&gt;&lt;span class="fact-dot"&gt;&lt;/span&gt;The US EPA estimates idling wastes 6 billion gallons of fuel per year nationally.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="tip-img-wrap"&gt;&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Heavy_traffic_on_US101.jpg/1200px-Heavy_traffic_on_US101.jpg" alt="Traffic"/&gt;&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tip-card"&gt;&lt;div class="tip-stripe"&gt;&lt;/div&gt;&lt;div class="tip-inner"&gt;&lt;div class="tip-header"&gt;&lt;span class="tip-number"&gt;02&lt;/span&gt;&lt;h2 class="tip-title"&gt;Walk or cycle trips under 2 km&lt;/h2&gt;&lt;/div&gt;&lt;p class="tip-desc"&gt;Short car trips are the most polluting per kilometre — the engine hasn't warmed up, so combustion is inefficient.&lt;/p&gt;&lt;div class="facts-row"&gt;&lt;div class="fact-pill"&gt;&lt;span class="fact-dot"&gt;&lt;/span&gt;Cars emit up to 60% more CO₂ per km in the first 5 minutes of a cold engine start.&lt;/div&gt;&lt;div class="fact-pill"&gt;&lt;span class="fact-dot"&gt;&lt;/span&gt;Cycling produces 21g CO₂/km vs 271g CO₂/km for an average petrol car (Our World in Data).&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="tip-img-wrap"&gt;&lt;img src="https://images.unsplash.com/photo-1519583272095-6433daf26b6e?w=400&amp;auto=format&amp;fit=crop" alt="Cycling"/&gt;&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tip-card"&gt;&lt;div class="tip-stripe"&gt;&lt;/div&gt;&lt;div class="tip-inner"&gt;&lt;div class="tip-header"&gt;&lt;span class="tip-number"&gt;03&lt;/span&gt;&lt;h2 class="tip-title"&gt;Bring a reusable bag&lt;/h2&gt;&lt;/div&gt;&lt;p class="tip-desc"&gt;Single-use plastic bags contribute massively to landfill and ocean pollu</p>
+
+<div id="page-home" class="page active">
+  <div class="topbar">
+    <div class="profile-btn">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+    <button class="nav-btn active" onclick="showPage('home')">Home</button>
+    <div class="nav-right">
+      <div class="nav-dropdown" id="dd-home">
+        <button class="nav-dropdown-btn" onclick="toggleDropdown('dd-home')">
+          Sustainable living <span class="dropdown-arrow">▾</span>
+        </button>
+        <div class="dropdown-menu">
+          <div class="dropdown-item" onclick="showPage('outside'); closeDropdowns()">
+            <div class="dropdown-icon outside">🌿</div>
+            <div class="dropdown-label">
+              <strong>Sustainable Outside</strong>
+              <span>Transport, shopping & errands</span>
+            </div>
+          </div>
+          <div class="dropdown-item" onclick="showPage('inside'); closeDropdowns()">
+            <div class="dropdown-icon inside">🏠</div>
+            <div class="dropdown-label">
+              <strong>Sustainable Inside</strong>
+              <span>Energy, water & home habits</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-hero">
+    <div class="home-hero-bg"></div>
+    <div class="home-hero-overlay"></div>
+    <div class="home-hero-content">
+      <p class="home-eyebrow">Your sustainability guide</p>
+      <h1>Small steps.<br><em>Big impact.</em></h1>
+      <p class="home-hero-desc">Every choice you make — inside your home and out in the world — shapes the planet. Discover practical, evidence-backed habits to reduce your environmental footprint starting today.</p>
+      <div class="hero-cta-row">
+        <button class="btn-primary" onclick="showPage('outside')">Sustainable outside →</button>
+        <button class="btn-primary green" onclick="showPage('inside')">Sustainable inside →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-stats">
+    <div class="home-stat"><span class="home-stat-num">29%</span><span class="home-stat-label">of global emissions from transport</span></div>
+    <div class="home-stat"><span class="home-stat-num">40</span><span class="home-stat-label">tips across both guides</span></div>
+    <div class="home-stat"><span class="home-stat-num">1.5t</span><span class="home-stat-label">CO₂ saved by one transit switch/week</span></div>
+    <div class="home-stat"><span class="home-stat-num">73%</span><span class="home-stat-label">food footprint cut by plant-based diet</span></div>
+  </div>
+
+  <div class="home-mission" id="mission">
+    <div class="mission-text">
+      <p class="section-label">Our mission</p>
+      <h2>Why sustainability matters everywhere</h2>
+      <p>Most guides focus on just one side of life. But sustainability is 24/7 — the choices you make in your home and outside it both add up to your total footprint.</p>
+      <p>This guide covers both worlds with clear, sourced facts so every habit you build is grounded in real science, not vague advice.</p>
+    </div>
+    <div class="mission-image">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&auto=format&fit=crop" alt="Forest path"/>
+      <div class="mission-image-badge">
+        <strong>40%</strong>
+        emissions cut possible through daily habit changes
+      </div>
+    </div>
+  </div>
+
+  <div class="home-topics">
+    <div class="home-topics-inner">
+      <p class="section-label" style="color:rgba(255,255,255,0.5);">Choose your guide</p>
+      <h2>Two guides. One goal.</h2>
+      <div class="topics-grid">
+        <div class="topic-card outside-card" onclick="showPage('outside')">
+          <div class="topic-img">
+            <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&auto=format&fit=crop" alt="City traffic"/>
+          </div>
+          <div class="topic-body">
+            <p class="topic-tag blue">🌿 Outside</p>
+            <h3 class="topic-title">Sustainable Outside</h3>
+            <p class="topic-desc">Transport, shopping, eating out, fast fashion, and the daily choices you make beyond your front door. 20 tips backed by real data.</p>
+            <div class="topic-arrow blue">Explore tips →</div>
+          </div>
+        </div>
+        <div class="topic-card inside-card" onclick="showPage('inside')">
+          <div class="topic-img">
+            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop" alt="Cozy home"/>
+          </div>
+          <div class="topic-body">
+            <p class="topic-tag green">🏠 Inside</p>
+            <h3 class="topic-title">Sustainable Inside</h3>
+            <p class="topic-desc">Energy, heating, water, food waste, and household habits. 20 tips to make your home greener — saving money and the planet.</p>
+            <div class="topic-arrow green">Explore tips →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-why">
+    <p class="section-label">Why act now</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🌡️</div>
+        <h3>Climate tipping points are near</h3>
+        <p>Scientists warn that exceeding 1.5°C of warming risks irreversible ecosystem changes. Every tonne of CO₂ avoided matters — including yours.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💡</div>
+        <h3>Individual action scales up</h3>
+        <p>Consumer behaviour drives 60–70% of global emissions. Your choices send market signals that shape what industries produce and prioritise.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🤝</div>
+        <h3>Social influence is powerful</h3>
+        <p>Research shows each person who adopts a sustainable habit influences 3–5 others. Sharing your choices is itself an act of environmental impact.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-cta-banner">
+    <div class="cta-banner-bg"></div>
+    <div class="cta-banner-overlay"></div>
+    <div class="cta-banner-content">
+      <div class="cta-banner-text">
+        <h2>Ready to make a difference?</h2>
+        <p>Browse 40 tips across both guides — each backed by real statistics from the EPA, Oxford University, and the European Environment Agency.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;">
+        <button class="btn-primary" onclick="showPage('outside')" style="white-space:nowrap;">Outside →</button>
+        <button class="btn-primary green" onclick="showPage('inside')" style="white-space:nowrap;">Inside →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-footer">
+    <div class="footer-brand">
+      <h3>Sustainable living</h3>
+      <p>Evidence-based guidance for reducing your environmental footprint both inside and outside the home.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('outside')">Sustainable Outside</a>
+      <a onclick="showPage('inside')">Sustainable Inside</a>
+    </div>
+    <div class="footer-col">
+      <h4>Sources</h4>
+      <a>US Environmental Protection Agency</a>
+      <a>European Environment Agency</a>
+      <a>Our World in Data</a>
+      <a>University of Oxford</a>
+    </div>
+  </div>
+  <div class="footer-bottom">All facts are for educational purposes. Individual impact varies by region and lifestyle.</div>
+</div>
+
+<div id="page-outside" class="page">
+  <div class="topbar">
+    <div class="profile-btn">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+    <button class="nav-btn" onclick="showPage('home')">Home</button>
+    <div class="nav-right">
+      <div class="nav-dropdown" id="dd-outside">
+        <button class="nav-dropdown-btn active" onclick="toggleDropdown('dd-outside')">
+          Sustainable outside <span class="dropdown-arrow">▾</span>
+        </button>
+        <div class="dropdown-menu">
+          <div class="dropdown-item active-item" onclick="showPage('outside'); closeDropdowns()">
+            <div class="dropdown-icon outside">🌿</div>
+            <div class="dropdown-label">
+              <strong>Sustainable Outside</strong>
+              <span>Transport, shopping & errands</span>
+            </div>
+          </div>
+          <div class="dropdown-item" onclick="showPage('inside'); closeDropdowns()">
+            <div class="dropdown-icon inside">🏠</div>
+            <div class="dropdown-label">
+              <strong>Sustainable Inside</strong>
+              <span>Energy, water & home habits</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-hero">
+    <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1400&auto=format&fit=crop" alt="City traffic"/>
+    <div class="tips-hero-overlay"></div>
+    <div class="tips-hero-text">
+      <p class="tips-eyebrow">Environmental guide</p>
+      <h1>Sustainable outside</h1>
+      <p>Simple daily habits that measurably reduce your carbon footprint</p>
+    </div>
+  </div>
+
+  <div class="stat-bar">
+    <div class="stat-item"><span class="stat-num">29%</span><span class="stat-label">of global emissions from transport</span></div>
+    <div class="stat-item"><span class="stat-num">4.6t</span><span class="stat-label">CO₂ per car per year</span></div>
+    <div class="stat-item"><span class="stat-num">1.5t</span><span class="stat-label">saved by one transit switch/week</span></div>
+    <div class="stat-item"><span class="stat-num">500yr</span><span class="stat-label">for a plastic bag to decompose</span></div>
+  </div>
+
+  <div class="main">
+    <p class="tips-section-label">20 tips to stay sustainable outside</p>
+    <div class="tips-grid">
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">01</span><h2 class="tip-title">Turn off your engine at red lights</h2></div><p class="tip-desc">Idling over 10 seconds burns more fuel than restarting. Modern engines are built for frequent restarts with no added wear.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>10 minutes of idling burns ~0.26 litres of fuel and emits 600g of CO₂ for zero km travelled.</div><div class="fact-pill"><span class="fact-dot"></span>The US EPA estimates idling wastes 6 billion gallons of fuel per year nationally.</div></div></div><div class="tip-img-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Heavy_traffic_on_US101.jpg/1200px-Heavy_traffic_on_US101.jpg" alt="Traffic"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">02</span><h2 class="tip-title">Walk or cycle trips under 2 km</h2></div><p class="tip-desc">Short car trips are the most polluting per kilometre — the engine hasn't warmed up, so combustion is inefficient.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>Cars emit up to 60% more CO₂ per km in the first 5 minutes of a cold engine start.</div><div class="fact-pill"><span class="fact-dot"></span>Cycling produces 21g CO₂/km vs 271g CO₂/km for an average petrol car (Our World in Data).</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1519583272095-6433daf26b6e?w=400&auto=format&fit=crop" alt="Cycling"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">03</span><h2 class="tip-title">Bring a reusable bag</h2></div><p class="tip-desc">Single-use plastic bags contribute massively to landfill and ocean pollution. A cotton tote used regularly eliminates hundreds of bags a year.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>The average person uses 307 plastic bags per year; a reusable bag needs just 11 uses to break even.</div><div class="fact-pill"><span class="fact-dot"></span>Over 8 million tonnes of plastic enter the world's oceans each year — bags are among the top contributors.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&auto=format&fit=crop" alt="Reusable bag"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">04</span><h2 class="tip-title">Use public transport when possible</h2></div><p class="tip-desc">A full bus emits 4–9× less CO₂ per passenger than a single-occupancy car. Even occasional use makes a measurable annual difference.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>Switching one car commute per week to public transport saves ~1.5 tonnes CO₂ per person annually.</div><div class="fact-pill"><span class="fact-dot"></span>Light rail produces 62g CO₂/passenger-km vs 192g for a single-occupancy car (European Environment Agency).</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&auto=format&fit=crop" alt="Bus"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">05</span><h2 class="tip-title">Carry a reusable water bottle</h2></div><p class="tip-desc">Disposable plastic bottles require oil to produce and rarely get recycled. A reusable bottle eliminates hundreds of single-use plastics every year.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>It takes 3 litres of water to produce just 1 litre of bottled water.</div><div class="fact-pill"><span class="fact-dot"></span>Only 30% of plastic bottles in the US are recycled; the rest go to landfill or become pollution.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&auto=format&fit=crop" alt="Water bottle"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">06</span><h2 class="tip-title">Carpool with colleagues or neighbours</h2></div><p class="tip-desc">Sharing a journey with one other person halves each person's per-km emissions. It also reduces road congestion.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>If every US commuter carpooled just 1 day per week, it would save 37 million gallons of fuel weekly.</div><div class="fact-pill"><span class="fact-dot"></span>Average car occupancy in the US is just 1.5 people — close to the worst possible efficiency.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=400&auto=format&fit=crop" alt="Carpool"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">07</span><h2 class="tip-title">Keep your car tyres properly inflated</h2></div><p class="tip-desc">Under-inflated tyres increase rolling resistance, forcing the engine to work harder and burn more fuel on every journey.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>Tyres inflated 10 PSI below recommended reduce fuel efficiency by about 3.3% (US DOE).</div><div class="fact-pill"><span class="fact-dot"></span>Correct tyre pressure across the US fleet could save 1.2 billion gallons of fuel annually.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&auto=format&fit=crop" alt="Car tyre"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">08</span><h2 class="tip-title">Buy local produce when shopping</h2></div><p class="tip-desc">Food transported shorter distances requires less fuel for refrigeration and shipping. Local markets also tend to use less packaging.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>"Food miles" account for about 6% of all food system greenhouse gas emissions globally (Nature Food, 2022).</div><div class="fact-pill"><span class="fact-dot"></span>The average meal in the US travels over 1,500 miles from farm to plate.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&auto=format&fit=crop" alt="Farmers market"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">09</span><h2 class="tip-title">Avoid fast fashion — choose quality</h2></div><p class="tip-desc">Clothing production is one of the world's most polluting industries. Buying fewer, better-made garments dramatically cuts your fashion footprint.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>The fashion industry produces 10% of global carbon emissions — more than aviation and shipping combined.</div><div class="fact-pill"><span class="fact-dot"></span>85% of all textiles end up in landfills each year; the equivalent of one rubbish truck per second.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=400&auto=format&fit=crop" alt="Clothing"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">10</span><h2 class="tip-title">Don't litter — dispose of waste responsibly</h2></div><p class="tip-desc">Litter that reaches waterways contributes to microplastic pollution. Always use bins or take rubbish home when one isn't available.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>Microplastics have now been found in human blood, lung tissue, and even placenta.</div><div class="fact-pill"><span class="fact-dot"></span>Cigarette butts are the world's most littered item — and are not biodegradable.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=400&auto=format&fit=crop" alt="Clean street"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">11</span><h2 class="tip-title">Choose plant-based meals when eating out</h2></div><p class="tip-desc">Meat, especially beef, requires large amounts of land, water, and energy. Opting for plant-based dishes even occasionally makes a real difference.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>Producing 1 kg of beef emits up to 60 kg of CO₂-equivalent — 50× more than 1 kg of vegetables.</div><div class="fact-pill"><span class="fact-dot"></span>A plant-based diet can reduce food carbon footprint by up to 73% (University of Oxford).</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop" alt="Plant food"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">12</span><h2 class="tip-title">Recycle correctly when outside</h2></div><p class="tip-desc">Contaminated recycling bins are often sent to landfill. Learning which items belong where saves entire batches from being rejected.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>Recycling one aluminium can saves enough energy to run a TV for 3 hours.</div><div class="fact-pill"><span class="fact-dot"></span>25% of recycling in some cities is rejected due to contamination.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1604187351574-c75ca79f5807?w=400&auto=format&fit=crop" alt="Recycling"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">13</span><h2 class="tip-title">Avoid short-haul flights — take the train</h2></div><p class="tip-desc">Trains emit a fraction of the CO₂ of flights. For trips under 500 km, rail is almost always the lower-carbon option.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>A return flight London to New York produces ~1.7 tonnes of CO₂ per passenger.</div><div class="fact-pill"><span class="fact-dot"></span>Rail emits 6–14g CO₂/km vs 255g/km for short-haul flights per passenger.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400&auto=format&fit=crop" alt="Train"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">14</span><h2 class="tip-title">Refill, don't replace</h2></div><p class="tip-desc">Many products — cleaning sprays, shampoos, coffee — now offer refill options that use up to 90% less plastic than buying new.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>Refillable containers reduce plastic waste per product by up to 90% vs single-use packaging.</div><div class="fact-pill"><span class="fact-dot"></span>The global refill market is projected to reach $73 billion by 2030.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1582408921715-18e7806ead21?w=400&auto=format&fit=crop" alt="Refill"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">15</span><h2 class="tip-title">Maintain a steady speed while driving</h2></div><p class="tip-desc">Aggressive acceleration and braking dramatically increases fuel consumption. Smooth driving can improve efficiency by up to 30%.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>Driving at 110 km/h vs 90 km/h uses up to 25% more fuel (IEA).</div><div class="fact-pill"><span class="fact-dot"></span>Eco-driving courses reduce fuel use by 10–15% with no changes to routes or vehicles.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400&auto=format&fit=crop" alt="Driving"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">16</span><h2 class="tip-title">Support green businesses</h2></div><p class="tip-desc">Where you spend your money shapes what businesses do. Choosing shops and services with sustainability commitments encourages industry-wide change.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>66% of consumers — and 73% of millennials — say they'd pay more for sustainable products (Nielsen).</div><div class="fact-pill"><span class="fact-dot"></span>Consumer spending drives 60–70% of global greenhouse gas emissions through supply chain demand.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&auto=format&fit=crop" alt="Green store"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">17</span><h2 class="tip-title">Avoid single-use coffee cups</h2></div><p class="tip-desc">Most disposable coffee cups cannot be recycled due to their plastic lining. Bringing your own cup eliminates the waste entirely.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>500 billion single-use cups are used globally every year — fewer than 1% are recycled.</div><div class="fact-pill"><span class="fact-dot"></span>Many cafés offer a 10–25 cent discount for reusable cups.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&auto=format&fit=crop" alt="Coffee cup"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">18</span><h2 class="tip-title">Plant a tree or support urban greening</h2></div><p class="tip-desc">Trees absorb CO₂, cool urban areas, and support biodiversity. Joining or donating to local tree-planting initiatives has lasting environmental benefits.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>A single mature tree absorbs approximately 21 kg of CO₂ per year.</div><div class="fact-pill"><span class="fact-dot"></span>Urban trees reduce local temperatures by 2–8°C, cutting air conditioning demand.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&auto=format&fit=crop" alt="Tree planting"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">19</span><h2 class="tip-title">Consolidate errands into one trip</h2></div><p class="tip-desc">Multiple short trips produce more total emissions than one combined journey due to cold-start inefficiency. Plan ahead to group outings.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>Trip-chaining can reduce vehicle km travelled by 25%, directly cutting fuel consumption.</div><div class="fact-pill"><span class="fact-dot"></span>Cold engine starts produce 60–80× more pollution than a warm engine over the same distance.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=400&auto=format&fit=crop" alt="Errands"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number">20</span><h2 class="tip-title">Talk about it — share sustainable habits</h2></div><p class="tip-desc">Social influence is one of the most powerful drivers of behaviour change. Sharing what you do — without lecturing — can inspire people around you.</p><div class="facts-row"><div class="fact-pill"><span class="fact-dot"></span>Social norms messaging is more effective than factual information alone at changing environmental behaviour.</div><div class="fact-pill"><span class="fact-dot"></span>Each person who adopts a sustainable habit influences 3–5 others in their social circle (Cambridge, 2019).</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&auto=format&fit=crop" alt="Sharing habits"/></div></div>
+
+    </div>
+  </div>
+  <footer>
+    Sources: <span>US EPA · European Environment Agency · Our World in Data · IEA · University of Oxford · Nature Food · Nielsen</span><br>
+    All facts are for educational purposes. Individual impact varies by region and lifestyle.
+  </footer>
+</div>
+
+<div id="page-inside" class="page">
+  <div class="topbar">
+    <div class="profile-btn">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    </div>
+    <button class="nav-btn" onclick="showPage('home')">Home</button>
+    <div class="nav-right">
+      <div class="nav-dropdown" id="dd-inside">
+        <button class="nav-dropdown-btn active" onclick="toggleDropdown('dd-inside')">
+          Sustainable inside <span class="dropdown-arrow">▾</span>
+        </button>
+        <div class="dropdown-menu">
+          <div class="dropdown-item" onclick="showPage('outside'); closeDropdowns()">
+            <div class="dropdown-icon outside">🌿</div>
+            <div class="dropdown-label">
+              <strong>Sustainable Outside</strong>
+              <span>Transport, shopping & errands</span>
+            </div>
+          </div>
+          <div class="dropdown-item active-item" onclick="showPage('inside'); closeDropdowns()">
+            <div class="dropdown-icon inside">🏠</div>
+            <div class="dropdown-label">
+              <strong>Sustainable Inside</strong>
+              <span>Energy, water & home habits</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-hero">
+    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1400&auto=format&fit=crop" alt="Cozy home kitchen"/>
+    <div class="tips-hero-overlay"></div>
+    <div class="tips-hero-text">
+      <p class="tips-eyebrow green-ey">Home guide</p>
+      <h1>Sustainable inside</h1>
+      <p>Energy, water, and home habits that slash your household footprint</p>
+    </div>
+  </div>
+
+  <div class="stat-bar green-bar">
+    <div class="stat-item"><span class="stat-num">28%</span><span class="stat-label">of emissions from buildings & homes</span></div>
+    <div class="stat-item"><span class="stat-num">£500</span><span class="stat-label">average annual saving from efficiency</span></div>
+    <div class="stat-item"><span class="stat-num">1/3</span><span class="stat-label">of food bought globally is wasted</span></div>
+    <div class="stat-item"><span class="stat-num">50%</span><span class="stat-label">water saved by simple habit changes</span></div>
+  </div>
+
+  <div class="main">
+    <p class="tips-section-label green-sl">20 tips to make your home more sustainable</p>
+    <div class="tips-grid">
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">01</span><h2 class="tip-title">Switch to LED light bulbs</h2></div><p class="tip-desc">LED bulbs use up to 90% less energy than traditional incandescent bulbs and last significantly longer, making them one of the easiest swaps you can make.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Replacing one 60W incandescent with an LED saves around 50 kg of CO₂ per year.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>LEDs last up to 25 times longer than traditional bulbs — reducing waste and replacement costs.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1565608438257-fac3c27beb36?w=400&auto=format&fit=crop" alt="LED bulb"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">02</span><h2 class="tip-title">Turn off appliances at the plug</h2></div><p class="tip-desc">Devices left on standby still draw power. Turning off TVs, chargers, and computers at the wall eliminates this invisible "phantom load."</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Standby power accounts for 5–10% of residential electricity use in most countries (IEA).</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>The average UK household wastes £55 per year on standby power — cutting it costs nothing.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&auto=format&fit=crop" alt="Plug socket"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">03</span><h2 class="tip-title">Wash laundry at 30°C</h2></div><p class="tip-desc">Most modern detergents are designed to work effectively at low temperatures. Washing at 30°C instead of 60°C dramatically cuts the energy used per cycle.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Washing at 30°C uses around 40% less energy than washing at 40°C.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>If all UK households switched to 30°C washes, it would save over 500,000 tonnes of CO₂ annually.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400&auto=format&fit=crop" alt="Washing machine"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">04</span><h2 class="tip-title">Reduce shower time by 2 minutes</h2></div><p class="tip-desc">Hot water heating is one of the most energy-intensive parts of a home. Shaving just 2 minutes off your daily shower adds up over a year.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>A 2-minute shorter shower saves around 10 litres of water and cuts water heating energy by ~12%.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Showers account for nearly 25% of all household water use in developed countries.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&auto=format&fit=crop" alt="Shower"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">05</span><h2 class="tip-title">Lower your thermostat by 1°C</h2></div><p class="tip-desc">Heating is the biggest energy cost in most homes. A single degree reduction has a surprisingly large cumulative effect across a heating season.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Turning your thermostat down by 1°C can reduce your heating bill by up to 10% (Energy Saving Trust).</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Space heating accounts for roughly 42% of all energy use in EU households.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&auto=format&fit=crop" alt="Thermostat"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">06</span><h2 class="tip-title">Reduce food waste — plan your meals</h2></div><p class="tip-desc">Food waste is one of the most overlooked sources of household emissions. Planning meals and using leftovers prevents perfectly good food from going to landfill.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>If food waste were a country, it would be the third-largest emitter of greenhouse gases on the planet.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>The average UK household throws away £700 worth of food each year.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=400&auto=format&fit=crop" alt="Meal prep"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">07</span><h2 class="tip-title">Use a full dishwasher, not handwashing</h2></div><p class="tip-desc">A full, efficient dishwasher uses less water per item than handwashing. The key is running it only when full and using the eco setting.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>A full dishwasher uses around 9–12 litres of water vs up to 60 litres for handwashing the same load.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Using the eco cycle cuts energy use by up to 45% compared to standard cycles.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&auto=format&fit=crop" alt="Dishwasher"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">08</span><h2 class="tip-title">Air-dry your laundry instead of tumble drying</h2></div><p class="tip-desc">Tumble dryers are among the most energy-hungry appliances in the home. Air-drying costs nothing and is gentler on fabrics too.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>A tumble dryer uses around 4–5 kWh per cycle — more than any other household appliance per use.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Air-drying laundry can save the average household £150–£200 per year on energy bills.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=400&auto=format&fit=crop" alt="Air drying laundry"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">09</span><h2 class="tip-title">Fix dripping taps immediately</h2></div><p class="tip-desc">A dripping tap might seem minor, but over a year the volume of wasted water is substantial. Fixing it is usually simple and cheap.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>A tap dripping once per second wastes over 11,000 litres of water per year.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Household leaks in the US waste nearly 1 trillion gallons of water each year (EPA).</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&auto=format&fit=crop" alt="Tap"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">10</span><h2 class="tip-title">Compost food scraps</h2></div><p class="tip-desc">Food scraps sent to landfill produce methane — a greenhouse gas far more potent than CO₂. Home composting turns waste into a valuable resource for gardens.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Methane from landfills is 25× more potent as a greenhouse gas than CO₂ over 100 years.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Composting at home can divert up to 150 kg of food waste per household per year from landfill.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1621460249485-4e4f92c9de5d?w=400&auto=format&fit=crop" alt="Composting"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">11</span><h2 class="tip-title">Insulate your home properly</h2></div><p class="tip-desc">Poor insulation means heat escapes and your boiler works harder. Draught-proofing windows and doors is one of the most cost-effective green home improvements.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Up to 25% of heat in an uninsulated home is lost through the roof (Energy Saving Trust).</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Properly insulating a semi-detached home can save over 1 tonne of CO₂ per year.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&auto=format&fit=crop" alt="Insulation"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">12</span><h2 class="tip-title">Buy second-hand furniture and appliances</h2></div><p class="tip-desc">Manufacturing new furniture and appliances is extremely energy-intensive. Buying second-hand extends the life of existing goods and avoids new production entirely.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Buying a second-hand sofa instead of new saves the equivalent of around 90 kg of CO₂.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>The resale furniture market is projected to grow to $16.6 billion by 2025 as demand surges.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&auto=format&fit=crop" alt="Second hand furniture"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">13</span><h2 class="tip-title">Only boil what you need in the kettle</h2></div><p class="tip-desc">Overfilling the kettle is one of the most common and unnecessary energy wastes in the kitchen. Boil only the amount you actually need.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>The UK wastes £68 million of electricity per year from overfilling kettles (Energy Saving Trust).</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Boiling only the water you need can cut a kettle's energy use in half.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&auto=format&fit=crop" alt="Kettle"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">14</span><h2 class="tip-title">Switch to a green energy tariff</h2></div><p class="tip-desc">Many energy providers now offer tariffs backed by renewable sources. Switching is often free and can dramatically reduce your home's indirect emissions.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Switching to a 100% renewable electricity tariff can eliminate up to 1.5 tonnes of CO₂ from your annual footprint.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Electricity generation accounts for about 25% of global greenhouse gas emissions.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&auto=format&fit=crop" alt="Solar panels"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">15</span><h2 class="tip-title">Use a low-flow showerhead</h2></div><p class="tip-desc">Low-flow showerheads deliver a satisfying shower while using significantly less water and energy — a one-time investment that pays back quickly.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>A low-flow showerhead uses 6–8 litres/min vs 15–20 litres/min for a standard head — over 50% less water.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>A family of four could save over 160,000 litres of water per year by switching.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&auto=format&fit=crop" alt="Showerhead"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">16</span><h2 class="tip-title">Grow your own herbs or vegetables</h2></div><p class="tip-desc">Even a small windowsill herb garden reduces packaging waste and transport emissions. It also reconnects you with where food comes from.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Growing your own food eliminates transport, packaging, and refrigeration emissions associated with supermarket produce.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>A 10 m² vegetable patch can produce up to 50 kg of food per year with minimal inputs.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&auto=format&fit=crop" alt="Growing food"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">17</span><h2 class="tip-title">Avoid single-use cleaning products</h2></div><p class="tip-desc">Many conventional cleaning sprays come in single-use plastic bottles. Concentrated tablets or refillable alternatives deliver the same result with far less waste.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Cleaning product packaging generates over 900 million plastic bottles of waste in the US every year.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Concentrated cleaning tablets use up to 98% less plastic packaging per clean than traditional spray bottles.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1527515637462-cff94aca55f5?w=400&auto=format&fit=crop" alt="Cleaning products"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">18</span><h2 class="tip-title">Use smart power strips</h2></div><p class="tip-desc">Smart strips automatically cut power to devices that aren't in use, eliminating standby drain from TVs, consoles, and entertainment setups without any effort.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Smart power strips can reduce home electricity use by 5–10% — saving £50–£100 per year in a typical household.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>The average home has 40+ devices drawing standby power simultaneously.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&auto=format&fit=crop" alt="Power strip"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">19</span><h2 class="tip-title">Install a water-saving toilet flush</h2></div><p class="tip-desc">Older toilets can use up to 13 litres per flush. Dual-flush systems or cistern displacement devices reduce this significantly with no loss of function.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Toilets account for nearly 30% of indoor household water use (EPA).</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>A dual-flush toilet reduces water use per flush by up to 67% compared to older single-flush models.</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&auto=format&fit=crop" alt="Bathroom"/></div></div>
+
+      <div class="tip-card"><div class="tip-stripe"></div><div class="tip-inner"><div class="tip-header"><span class="tip-number green-num">20</span><h2 class="tip-title">Talk about it — inspire your household</h2></div><p class="tip-desc">Sustainability at home works best when everyone is on board. Involving family or housemates in the habits you build multiplies the impact without extra effort.</p><div class="facts-row"><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Households where all members adopt green habits reduce their footprint 2–3× more than individuals acting alone.</div><div class="fact-pill green-pill"><span class="fact-dot green-dot"></span>Social norms within a home are among the strongest predictors of sustainable energy behaviour (Nature Energy, 2021).</div></div></div><div class="tip-img-wrap"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&auto=format&fit=crop" alt="Family"/></div></div>
+
+    </div>
+  </div>
+
+  <footer class="green-footer">
+    Sources: <span>US EPA · Energy Saving Trust · IEA · European Environment Agency · Our World in Data · Nature Energy</span><br>
+    All facts are for educational purposes. Individual impact varies by region and lifestyle.
+  </footer>
+</div>
+
+<script>
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    closeDropdowns();
+  }
+
+  function toggleDropdown(id) {
+    const dd = document.getElementById(id);
+    const isOpen = dd.classList.contains('open');
+    closeDropdowns();
+    if (!isOpen) dd.classList.add('open');
+  }
+
+  function closeDropdowns() {
+    document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+  }
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.nav-dropdown')) closeDropdowns();
+  });
+</script>
 </body>
 </html>
