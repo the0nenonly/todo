@@ -1,0 +1,630 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.3">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1">&lt;title&gt;Sustainable Living&lt;/title&gt;</p>
+<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&amp;family=DM+Serif+Display:ital@0;1&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--blue-dark: #0d3b6e;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--blue-mid: #1a5fa8;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--blue-pale: #e8f3fb;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--blue-accent: #5bb8f5;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--green-dark: #0a3d2e;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--green-mid: #1a7a52;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--green-pale: #e6f5ef;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--green-accent: #4ecfa0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--text: #0a1a2a;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--text-muted: #3a5068;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--white: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--surface: #f7fafd;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--border: #d0e4f5;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--surface);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>min-height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 18px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.7;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.page { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.page.active { display: block; }</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topbar {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--blue-dark);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: 66px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 0 28px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: sticky;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>z-index: 200;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-bottom: 1px solid rgba(255,255,255,0.08);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.profile-btn {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 42px; height: 42px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.12);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1.5px solid rgba(255,255,255,0.3);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer; flex-shrink: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.profile-btn:hover { background: rgba(255,255,255,0.2); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.profile-btn svg { width: 22px; height: 22px; fill: white; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-btn {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: transparent;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.25);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 100px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 8px 22px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 16px; font-weight: 400;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: rgba(255,255,255,0.9);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.2s, border-color 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.45); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-btn.active {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.18);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-color: rgba(255,255,255,0.6);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-right { margin-left: auto; display: flex; gap: 10px; align-items: center; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown { position: relative; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown-btn {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: transparent;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.25);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 100px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 8px 22px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 16px; font-weight: 400;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: rgba(255,255,255,0.9);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.2s, border-color 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; gap: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown-btn:hover,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown.open .nav-dropdown-btn {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-color: rgba(255,255,255,0.45);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown-btn.active {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.18);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-color: rgba(255,255,255,0.6);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-arrow {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: transform 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown.open .dropdown-arrow { transform: rotate(180deg); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-menu {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>top: calc(100% + 10px);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>right: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #0a2d56;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.15);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>min-width: 220px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 16px 40px rgba(0,0,0,0.35);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>z-index: 300;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-dropdown.open .dropdown-menu { display: block; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-item {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 14px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.15s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-bottom: 1px solid rgba(255,255,255,0.06);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-decoration: none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-item:last-child { border-bottom: none; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-item:hover { background: rgba(255,255,255,0.08); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-item.active-item { background: rgba(255,255,255,0.1); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-icon {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 34px; height: 34px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 17px; flex-shrink: 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-icon.outside { background: rgba(91,184,245,0.18); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-icon.inside<span class="Apple-converted-space">  </span>{ background: rgba(78,207,160,0.18); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-label { flex: 1; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-label strong {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px; font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dropdown-label span {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 12px; color: rgba(255,255,255,0.45);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 1px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-hero {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>min-height: 520px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-hero-bg {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: absolute; inset: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background-image: url('https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1600&amp;auto=format&amp;fit=crop');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background-size: cover; background-position: center 40%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-hero-overlay {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: absolute; inset: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: linear-gradient(110deg, rgba(5,25,55,0.88) 0%, rgba(5,25,55,0.55) 55%, rgba(5,25,55,0.2) 100%);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-hero-content {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: relative; z-index: 2;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 80px 60px; max-width: 680px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-eyebrow {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: inline-flex; align-items: center; gap: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 12px; font-weight: 600; letter-spacing: 0.14em;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-transform: uppercase; color: var(--blue-accent); margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-eyebrow::before {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: ''; display: block; width: 28px; height: 2px; background: var(--blue-accent);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-hero h1 {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Serif Display', serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 58px; font-weight: 400;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: white; line-height: 1.1; margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-hero h1 em { font-style: italic; color: #7ecef5; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-hero-desc {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 18px; color: rgba(255,255,255,0.72);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.7; margin-bottom: 36px; max-width: 520px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--blue-accent); color: var(--blue-dark);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: none; border-radius: 100px; padding: 14px 32px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer; transition: background 0.2s, transform 0.15s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary:hover { background: #7ed8ff; transform: translateY(-1px); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary.green { background: var(--green-accent); color: var(--green-dark); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary.green:hover { background: #6fe0b5; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-ghost {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: transparent; color: white;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1.5px solid rgba(255,255,255,0.4); border-radius: 100px; padding: 14px 32px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 400;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer; transition: background 0.2s, border-color 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.7); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-stats {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--blue-mid);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: grid; grid-template-columns: repeat(4, 1fr);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-stat {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 22px 16px; text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-right: 1px solid rgba(255,255,255,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-stat:last-child { border-right: none; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-stat-num {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: block; font-family: 'DM Serif Display', serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 28px; color: #7ecef5; line-height: 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-stat-label {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: block; font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: rgba(255,255,255,0.62); margin-top: 5px; line-height: 1.4;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.section-label {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 12px; font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing: 0.12em; text-transform: uppercase;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--blue-mid); margin-bottom: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; gap: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.section-label.green-label { color: var(--green-mid); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.section-label.green-label::after { background: #b8e8d4; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-mission {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>max-width: 960px; margin: 0 auto;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 72px 32px 56px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: grid; grid-template-columns: 1fr 1fr;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 64px; align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.mission-text h2 {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Serif Display', serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 38px; font-weight: 400; color: var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.2; margin-bottom: 18px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.mission-text p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 14px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.mission-image { border-radius: 20px; overflow: hidden; height: 340px; position: relative; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.mission-image img { width: 100%; height: 100%; object-fit: cover; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.mission-image-badge {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: absolute; bottom: 20px; left: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(5,25,55,0.82); backdrop-filter: blur(8px);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.15);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 12px; padding: 12px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: white; font-size: 14px; line-height: 1.4;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.mission-image-badge strong {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: block; font-size: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Serif Display', serif; color: #7ecef5;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-topics { background: var(--blue-dark); padding: 64px 32px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-topics-inner { max-width: 960px; margin: 0 auto; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-topics .section-label { color: rgba(255,255,255,0.5); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-topics .section-label::after { background: rgba(255,255,255,0.12); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-topics h2 {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Serif Display', serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 36px; font-weight: 400; color: white; margin-bottom: 36px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-card {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.06);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 20px; overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.2s, transform 0.2s, border-color 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-card.outside-card:hover { border-color: rgba(91,184,245,0.5); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-card.inside-card:hover<span class="Apple-converted-space">  </span>{ border-color: rgba(78,207,160,0.5); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-img { height: 200px; overflow: hidden; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-card:hover .topic-img img { transform: scale(1.04); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-body { padding: 24px 26px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-tag {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px; font-weight: 600; letter-spacing: 0.1em;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-transform: uppercase; margin-bottom: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-tag.blue { color: var(--blue-accent); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-tag.green { color: var(--green-accent); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-title { font-size: 20px; font-weight: 500; color: white; line-height: 1.3; margin-bottom: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-arrow {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: inline-flex; align-items: center; gap: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px; font-weight: 500; margin-top: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: gap 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-arrow.blue { color: var(--blue-accent); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-arrow.green { color: var(--green-accent); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topic-card:hover .topic-arrow { gap: 10px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-why { max-width: 960px; margin: 0 auto; padding: 72px 32px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.why-card {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--white); border: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 16px; padding: 28px 24px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.why-icon {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 48px; height: 48px; border-radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--blue-pale); display: flex; align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>justify-content: center; margin-bottom: 16px; font-size: 22px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.why-card h3 { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 10px; line-height: 1.3; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.why-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-cta-banner { margin: 0 32px 72px; border-radius: 24px; overflow: hidden; position: relative; max-width: 896px; margin-left: auto; margin-right: auto; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cta-banner-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?w=1200&amp;auto=format&amp;fit=crop'); background-size: cover; background-position: center; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cta-banner-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(13,59,110,0.93) 0%, rgba(26,95,168,0.80) 100%); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cta-banner-content { position: relative; z-index: 2; padding: 56px 60px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cta-banner-text h2 { font-family: 'DM Serif Display', serif; font-size: 32px; font-weight: 400; color: white; line-height: 1.2; margin-bottom: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cta-banner-text p { font-size: 15px; color: rgba(255,255,255,0.68); line-height: 1.6; max-width: 400px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.home-footer { background: #070f1f; padding: 40px 32px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.footer-brand h3 { font-family: 'DM Serif Display', serif; font-size: 22px; color: white; margin-bottom: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.footer-brand p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 14px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 8px; cursor: pointer; transition: color 0.2s; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.footer-col a:hover { color: var(--blue-accent); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.footer-bottom { background: #070f1f; border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 32px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.25); }</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero { position: relative; height: 280px; overflow: hidden; display: flex; align-items: flex-end; padding: 0 36px 32px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 55%; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,20,45,0.85) 0%, rgba(5,20,45,0.3) 55%, transparent 100%); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero-text { position: relative; z-index: 2; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-accent); margin-bottom: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-eyebrow.green-ey { color: var(--green-accent); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero-text h1 { font-family: 'DM Serif Display', serif; font-size: 42px; font-weight: 400; color: white; line-height: 1.15; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-hero-text p { font-size: 17px; color: rgba(255,255,255,0.75); margin-top: 8px; max-width: 500px; line-height: 1.5; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-bar { background: var(--blue-mid); display: grid; grid-template-columns: repeat(4, 1fr); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-bar.green-bar { background: var(--green-mid); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-item { padding: 20px 14px; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-item:last-child { border-right: none; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-num { display: block; font-family: 'DM Serif Display', serif; font-size: 26px; color: #7ecef5; line-height: 1; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-bar.green-bar .stat-num { color: #8ef5d5; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-label { display: block; font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 5px; line-height: 1.4; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.main { max-width: 900px; margin: 0 auto; padding: 36px 24px 56px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-section-label { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-section-label.green-sl { color: var(--green-mid); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-section-label.green-sl::after { background: #b8e8d4; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tips-grid { display: flex; flex-direction: column; gap: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tip-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tip-stripe { width: 6px; flex-shrink: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#page-outside .tip-card:nth-child(4n+1) .tip-stripe { background: #1a5fa8; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#page-outside .tip-card:nth-child(4n+2) .tip-stripe { background: #1d9e75; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#page-outside .tip-card:nth-child(4n+3) .tip-stripe { background: #ba7517; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#page-outside .tip-card:nth-child(4n+0) .tip-stripe { background: #8b3ab8; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#page-inside .tip-card:nth-child(4n+1) .tip-stripe { background: #1a7a52; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#page-inside .tip-card:nth-child(4n+2) .tip-stripe { background: #1a5fa8; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#page-inside .tip-card:nth-child(4n+3) .tip-stripe { background: #ba7517; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#page-inside .tip-card:nth-child(4n+0) .tip-stripe { background: #8b3ab8; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tip-inner { flex: 1; padding: 22px 24px; min-width: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tip-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tip-number { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--blue-mid); background: var(--blue-pale); border-radius: 100px; padding: 4px 12px; flex-shrink: 0; margin-top: 3px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tip-number.green-num { color: var(--green-mid); background: var(--green-pale); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tip-title { font-size: 19px; font-weight: 600; color: var(--text); line-height: 1.3; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tip-desc { font-size: 16px; color: var(--text-muted); line-height: 1.75; margin-bottom: 14px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.facts-row { display: flex; flex-direction: column; gap: 9px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.fact-pill { display: flex; align-items: flex-start; gap: 10px; background: #eef6ff; border: 1px solid #c8e0f5; border-radius: 10px; padding: 10px 14px; font-size: 15px; color: #0c3d6e; line-height: 1.6; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.fact-pill.green-pill { background: #eaf7f1; border-color: #b0dfc9; color: #0a3d2e; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.fact-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-mid); flex-shrink: 0; margin-top: 6px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.fact-dot.green-dot { background: var(--green-mid); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tip-img-wrap { width: 150px; flex-shrink: 0; overflow: hidden; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tip-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>footer { background: var(--blue-dark); padding: 24px 36px; font-size: 14px; color: rgba(255,255,255,0.45); text-align: center; line-height: 1.7; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>footer span { color: rgba(255,255,255,0.7); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>footer.green-footer { background: var(--green-dark); }</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="page-home" class="page active"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="topbar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="profile-btn"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="nav-btn active" onclick="showPage('home')"&gt;Home&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-dropdown" id="dd-home"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="nav-dropdown-btn" onclick="toggleDropdown('dd-home')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>Sustainable living &lt;span class="dropdown-arrow"&gt;▾&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="dropdown-menu"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="dropdown-item" onclick="showPage('outside'); closeDropdowns()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-icon outside"&gt;🌿&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-label"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;strong&gt;Sustainable Outside&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;span&gt;Transport, shopping &amp; errands&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="dropdown-item" onclick="showPage('inside'); closeDropdowns()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-icon inside"&gt;🏠&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-label"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;strong&gt;Sustainable Inside&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;span&gt;Energy, water &amp; home habits&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-hero"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-hero-bg"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-hero-overlay"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-hero-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="home-eyebrow"&gt;Your sustainability guide&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1&gt;Small steps.&lt;br&gt;&lt;em&gt;Big impact.&lt;/em&gt;&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="home-hero-desc"&gt;Every choice you make — inside your home and out in the world — shapes the planet. Discover practical, evidence-backed habits to reduce your environmental footprint starting today.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="hero-cta-row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn-primary" onclick="showPage('outside')"&gt;Sustainable outside →&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn-primary green" onclick="showPage('inside')"&gt;Sustainable inside →&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-stats"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-stat"&gt;&lt;span class="home-stat-num"&gt;29%&lt;/span&gt;&lt;span class="home-stat-label"&gt;of global emissions from transport&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-stat"&gt;&lt;span class="home-stat-num"&gt;40&lt;/span&gt;&lt;span class="home-stat-label"&gt;tips across both guides&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-stat"&gt;&lt;span class="home-stat-num"&gt;1.5t&lt;/span&gt;&lt;span class="home-stat-label"&gt;CO₂ saved by one transit switch/week&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-stat"&gt;&lt;span class="home-stat-num"&gt;73%&lt;/span&gt;&lt;span class="home-stat-label"&gt;food footprint cut by plant-based diet&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-mission" id="mission"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mission-text"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="section-label"&gt;Our mission&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;Why sustainability matters everywhere&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Most guides focus on just one side of life. But sustainability is 24/7 — the choices you make in your home and outside it both add up to your total footprint.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;This guide covers both worlds with clear, sourced facts so every habit you build is grounded in real science, not vague advice.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="mission-image"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&amp;auto=format&amp;fit=crop" alt="Forest path"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="mission-image-badge"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong&gt;40%&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>emissions cut possible through daily habit changes</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-topics"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="home-topics-inner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="section-label" style="color:rgba(255,255,255,0.5);"&gt;Choose your guide&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;Two guides. One goal.&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="topics-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="topic-card outside-card" onclick="showPage('outside')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="topic-img"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&amp;auto=format&amp;fit=crop" alt="City traffic"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="topic-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="topic-tag blue"&gt;🌿 Outside&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 class="topic-title"&gt;Sustainable Outside&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="topic-desc"&gt;Transport, shopping, eating out, fast fashion, and the daily choices you make beyond your front door. 20 tips backed by real data.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="topic-arrow blue"&gt;Explore tips →&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="topic-card inside-card" onclick="showPage('inside')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="topic-img"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&amp;auto=format&amp;fit=crop" alt="Cozy home"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="topic-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="topic-tag green"&gt;🏠 Inside&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 class="topic-title"&gt;Sustainable Inside&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="topic-desc"&gt;Energy, heating, water, food waste, and household habits. 20 tips to make your home greener — saving money and the planet.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="topic-arrow green"&gt;Explore tips →&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-why"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="section-label"&gt;Why act now&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="why-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="why-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="why-icon"&gt;🌡️&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Climate tipping points are near&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Scientists warn that exceeding 1.5°C of warming risks irreversible ecosystem changes. Every tonne of CO₂ avoided matters — including yours.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="why-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="why-icon"&gt;💡&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Individual action scales up&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Consumer behaviour drives 60–70% of global emissions. Your choices send market signals that shape what industries produce and prioritise.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="why-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="why-icon"&gt;🤝&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Social influence is powerful&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Research shows each person who adopts a sustainable habit influences 3–5 others. Sharing your choices is itself an act of environmental impact.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-cta-banner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cta-banner-bg"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cta-banner-overlay"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cta-banner-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="cta-banner-text"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2&gt;Ready to make a difference?&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Browse 40 tips across both guides — each backed by real statistics from the EPA, Oxford University, and the European Environment Agency.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn-primary" onclick="showPage('outside')" style="white-space:nowrap;"&gt;Outside →&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn-primary green" onclick="showPage('inside')" style="white-space:nowrap;"&gt;Inside →&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="home-footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="footer-brand"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;Sustainable living&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Evidence-based guidance for reducing your environmental footprint both inside and outside the home.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="footer-col"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h4&gt;Pages&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a onclick="showPage('home')"&gt;Home&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a onclick="showPage('outside')"&gt;Sustainable Outside&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a onclick="showPage('inside')"&gt;Sustainable Inside&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="footer-col"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h4&gt;Sources&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a&gt;US Environmental Protection Agency&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a&gt;European Environment Agency&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a&gt;Our World in Data&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;a&gt;University of Oxford&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="footer-bottom"&gt;All facts are for educational purposes. Individual impact varies by region and lifestyle.&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="page-outside" class="page"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="topbar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="profile-btn"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg viewBox="0 0 24 24"&gt;&lt;path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="nav-btn" onclick="showPage('home')"&gt;Home&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-dropdown" id="dd-outside"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="nav-dropdown-btn active" onclick="toggleDropdown('dd-outside')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>Sustainable outside &lt;span class="dropdown-arrow"&gt;▾&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="dropdown-menu"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="dropdown-item active-item" onclick="showPage('outside'); closeDropdowns()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-icon outside"&gt;🌿&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-label"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;strong&gt;Sustainable Outside&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;span&gt;Transport, shopping &amp; errands&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="dropdown-item" onclick="showPage('inside'); closeDropdowns()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-icon inside"&gt;🏠&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="dropdown-label"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;strong&gt;Sustainable Inside&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;span&gt;Energy, water &amp; home habits&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="tips-hero"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1400&amp;auto=format&amp;fit=crop" alt="City traffic"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tips-hero-overlay"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tips-hero-text"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="tips-eyebrow"&gt;Environmental guide&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1&gt;Sustainable outside&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Simple daily habits that measurably reduce your carbon footprint&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="stat-bar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="stat-item"&gt;&lt;span class="stat-num"&gt;29%&lt;/span&gt;&lt;span class="stat-label"&gt;of global emissions from transport&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="stat-item"&gt;&lt;span class="stat-num"&gt;4.6t&lt;/span&gt;&lt;span class="stat-label"&gt;CO₂ per car per year&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="stat-item"&gt;&lt;span class="stat-num"&gt;1.5t&lt;/span&gt;&lt;span class="stat-label"&gt;saved by one transit switch/week&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="stat-item"&gt;&lt;span class="stat-num"&gt;500yr&lt;/span&gt;&lt;span class="stat-label"&gt;for a plastic bag to decompose&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="main"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="tips-section-label"&gt;20 tips to stay sustainable outside&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="tips-grid"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tip-card"&gt;&lt;div class="tip-stripe"&gt;&lt;/div&gt;&lt;div class="tip-inner"&gt;&lt;div class="tip-header"&gt;&lt;span class="tip-number"&gt;01&lt;/span&gt;&lt;h2 class="tip-title"&gt;Turn off your engine at red lights&lt;/h2&gt;&lt;/div&gt;&lt;p class="tip-desc"&gt;Idling over 10 seconds burns more fuel than restarting. Modern engines are built for frequent restarts with no added wear.&lt;/p&gt;&lt;div class="facts-row"&gt;&lt;div class="fact-pill"&gt;&lt;span class="fact-dot"&gt;&lt;/span&gt;10 minutes of idling burns ~0.26 litres of fuel and emits 600g of CO₂ for zero km travelled.&lt;/div&gt;&lt;div class="fact-pill"&gt;&lt;span class="fact-dot"&gt;&lt;/span&gt;The US EPA estimates idling wastes 6 billion gallons of fuel per year nationally.&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="tip-img-wrap"&gt;&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Heavy_traffic_on_US101.jpg/1200px-Heavy_traffic_on_US101.jpg" alt="Traffic"/&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tip-card"&gt;&lt;div class="tip-stripe"&gt;&lt;/div&gt;&lt;div class="tip-inner"&gt;&lt;div class="tip-header"&gt;&lt;span class="tip-number"&gt;02&lt;/span&gt;&lt;h2 class="tip-title"&gt;Walk or cycle trips under 2 km&lt;/h2&gt;&lt;/div&gt;&lt;p class="tip-desc"&gt;Short car trips are the most polluting per kilometre — the engine hasn't warmed up, so combustion is inefficient.&lt;/p&gt;&lt;div class="facts-row"&gt;&lt;div class="fact-pill"&gt;&lt;span class="fact-dot"&gt;&lt;/span&gt;Cars emit up to 60% more CO₂ per km in the first 5 minutes of a cold engine start.&lt;/div&gt;&lt;div class="fact-pill"&gt;&lt;span class="fact-dot"&gt;&lt;/span&gt;Cycling produces 21g CO₂/km vs 271g CO₂/km for an average petrol car (Our World in Data).&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="tip-img-wrap"&gt;&lt;img src="https://images.unsplash.com/photo-1519583272095-6433daf26b6e?w=400&amp;auto=format&amp;fit=crop" alt="Cycling"/&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tip-card"&gt;&lt;div class="tip-stripe"&gt;&lt;/div&gt;&lt;div class="tip-inner"&gt;&lt;div class="tip-header"&gt;&lt;span class="tip-number"&gt;03&lt;/span&gt;&lt;h2 class="tip-title"&gt;Bring a reusable bag&lt;/h2&gt;&lt;/div&gt;&lt;p class="tip-desc"&gt;Single-use plastic bags contribute massively to landfill and ocean pollu</p>
+</body>
+</html>
